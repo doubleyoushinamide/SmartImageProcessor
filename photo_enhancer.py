@@ -250,30 +250,28 @@ class LogoHandler:
             return img
         try:
             is_landscape = img.width >= img.height
-            if self.width_mode == 'wide':
-                logo_width = int(img.width)
-            elif self.width_mode in ('left', 'right'):
-                logo_width = int(img.width * 0.5)
-            elif self.width_mode == 'centre':
-                logo_width = int(img.width * 0.7)
-            else:
-                logo_width = int(img.width)
-            if self.height_mode == 'tall':
-                if is_landscape:
-                    logo_height = int(img.height * 0.22)
-                else:
-                    logo_height = int(self.logo.height * (logo_width / self.logo.width))
-            elif self.height_mode == 'short':
-                if is_landscape:
-                    logo_height = int(img.height * 0.12)
-                else:
-                    logo_height = int(self.logo.height * (logo_width / self.logo.width) * 0.5)
-            else:
-                if is_landscape:
-                    logo_height = int(img.height * 0.22)
-                else:
-                    logo_height = int(self.logo.height * (logo_width / self.logo.width))
+            # Default logo size ratios
+            max_logo_width_ratio = 1.0 if (self.position == 'bottom' and self.width_mode == 'wide') else 0.25
+            max_logo_height_ratio = 0.22 if (self.position == 'bottom' and self.width_mode == 'wide') else 0.15
+
+            # For portrait images, allow a bit larger logo
+            if not is_landscape:
+                max_logo_width_ratio = 0.4 if not (self.position == 'bottom' and self.width_mode == 'wide') else 1.0
+                max_logo_height_ratio = 0.22 if (self.position == 'bottom' and self.width_mode == 'wide') else 0.18
+
+            # Calculate logo size
+            logo_width = int(img.width * max_logo_width_ratio)
+            # Maintain aspect ratio
+            aspect = self.logo.width / self.logo.height
+            logo_height = int(logo_width / aspect)
+            # If logo is too tall, limit by height
+            if logo_height > int(img.height * max_logo_height_ratio):
+                logo_height = int(img.height * max_logo_height_ratio)
+                logo_width = int(logo_height * aspect)
+
             resized_logo = self.logo.resize((logo_width, logo_height), Image.LANCZOS)
+
+            # Positioning
             if self.position == 'top':
                 y = 0
             else:
