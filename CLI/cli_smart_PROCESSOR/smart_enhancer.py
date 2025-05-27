@@ -1,3 +1,25 @@
+"""
+SmartImageProcessor CLI - Batch Photo Enhancer & Logo Watermarker
+
+Author: Salau Shina [https://github.com/doubleyoushinamide]
+License: MIT
+Created: 2025-05-23
+
+Description:
+    A robust, user-friendly command-line tool for batch photo enhancement and logo watermarking.
+    - Smart auto-adjustments: exposure, contrast, sharpness, color temperature, and more.
+    - Flexible logo placement: position, width, and height options for watermarking.
+    - Parallel processing for fast batch jobs.
+    - Automatic dependency installation and safe repeated runs.
+    - Designed for photographers, designers, and automation workflows.
+
+Usage:
+    Place your images in the 'photos/' directory and your logo as 'logo/logo.png'.
+    Run the script with Python 3.6+ and see --help for all CLI options.
+
+Repository: https://github.com/doubleyoushinamide/SmartImageProcessor/tree/main/CLI
+"""
+
 #!/usr/bin/env python3
 
 import os
