@@ -1,7 +1,4 @@
-# SmartImageProcessor
-
 # SmartImageProcessor CLI
-
 ## Directory Structure
 
 ```
